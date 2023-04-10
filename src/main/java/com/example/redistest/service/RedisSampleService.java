@@ -10,6 +10,11 @@ public class RedisSampleService {
 	@Autowired
 	private StringRedisTemplate stringRedisTemplate;
 
+	/**
+	 * redis에 key 조회
+	 * @param key
+	 * @return
+	 */
 	public String getRedisStringValue(String key) {
 		ValueOperations<String, String> stringValueOperations = stringRedisTemplate.opsForValue();
 		System.out.println("Redis key : " + key);
@@ -17,6 +22,11 @@ public class RedisSampleService {
 		return stringValueOperations.get(key);
 	}
 
+	/**
+	 * redis에 key, value 등록
+	 * @param key
+	 * @param value
+	 */
 	public void setRedisStringValue(String key, String value) {
 		ValueOperations<String, String> stringValueOperations = stringRedisTemplate.opsForValue();
 		stringValueOperations.set(key, value);

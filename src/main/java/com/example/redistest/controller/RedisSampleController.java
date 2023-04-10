@@ -19,23 +19,46 @@ public class RedisSampleController {
 	@Autowired
 	private RedisSampleService redisSampleService;
 
+	/**
+	 * redis에 key 값으로 조회
+	 * @param key
+	 * @return
+	 */
 	@GetMapping(value = "/redis")
 	public ResponseEntity<String> getRedisStringValue(String key) {
 		return ResponseEntity.ok(redisSampleService.getRedisStringValue(key));
 	}
 
+	/**
+	 * redis에 key, value 등록
+	 * @param key
+	 * @param value
+	 * @return
+	 */
 	@PostMapping(value = "/redis")
 	public ResponseEntity<Void> setRedisStringValue(String key, String value) {
 		redisSampleService.setRedisStringValue(key, value);
 		return new ResponseEntity<Void>(HttpStatus.CREATED);
 	}
 
+	/**
+	 * login 하면서 사용자 정보 (name, value) 등록
+	 * @param request
+	 * @param name
+	 * @param value
+	 * @return
+	 */
 	@GetMapping("/login")
 	public String login(HttpServletRequest request, @RequestParam String name, @RequestParam String value) {
 		request.getSession().setAttribute(name, value);
 		return request.getSession().getId();
 	}
 
+	/**
+	 * 현재 sessionId 조회
+	 * @param session
+	 * @return
+	 */
 	@GetMapping("/sessionId")
 	public String getSessionId(HttpSession session) {
 		return session.getId();
