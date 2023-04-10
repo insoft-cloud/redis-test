@@ -3,6 +3,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.redis.connection.RedisConnectionFactory;
+import org.springframework.data.redis.connection.RedisStandaloneConfiguration;
 import org.springframework.data.redis.connection.lettuce.LettuceConnectionFactory;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.serializer.StringRedisSerializer;
@@ -13,6 +14,12 @@ import org.springframework.session.data.redis.config.annotation.web.http.EnableR
 public class RedisConfig {
 	// @Autowired
 	// RedisClusterConfigurationProperties clusterProperties;
+
+	@Value("${spring.data.redis.host}")
+	private String host;
+
+	@Value("${spring.data.redis.port}")
+	private Integer port;
 
 	@Value("${spring.data.redis.password}")
 	private String password;
@@ -34,8 +41,10 @@ public class RedisConfig {
 	@Bean
 	public RedisConnectionFactory redisConnectionFactory() {
 		// stand alone 연결
-		LettuceConnectionFactory lettuceConnectionFactory = new LettuceConnectionFactory();
-		return lettuceConnectionFactory;
+		RedisStandaloneConfiguration config = new RedisStandaloneConfiguration(host, port);
+		config.setPassword(password);
+
+		return new LettuceConnectionFactory(config);
 	}
 	@Bean
 	public RedisTemplate<String, Object> redisTemplate() {
