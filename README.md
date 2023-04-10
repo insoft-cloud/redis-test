@@ -39,3 +39,7 @@ spring:
       port: 6379
       password: insoft!23
 ```  
+2. 프로그램 실행  
+```
+   java -jar build\libs\redis-test-0.0.1-SNAPSHOT.jar
+```
