@@ -48,10 +48,10 @@ public class RedisSampleController {
 	 * @param value
 	 * @return
 	 */
-	@GetMapping("/login")
-	public String login(HttpServletRequest request, @RequestParam String name, @RequestParam String value) {
+	@PostMapping("/login")
+	public ResponseEntity<String>  login(HttpServletRequest request, @RequestParam String name, @RequestParam String value) {
 		request.getSession().setAttribute(name, value);
-		return request.getSession().getId();
+		return ResponseEntity.ok(request.getSession().getId());
 	}
 
 	/**
@@ -60,8 +60,8 @@ public class RedisSampleController {
 	 * @return
 	 */
 	@GetMapping("/sessionId")
-	public String getSessionId(HttpSession session) {
-		return session.getId();
+	public ResponseEntity<String>  getSessionId(HttpSession session) {
+		return ResponseEntity.ok(session.getId());
 	}
 
 }
