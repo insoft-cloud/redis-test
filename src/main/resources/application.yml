@@ -3,13 +3,25 @@ server:
   port: 8080
 spring:
   session:
-    store-type: redis
     redis:
       flush-mode: on_save
       namespace: spring:session
       repository-type: indexed
   data:
     redis:
-      host: 172.30.10.25
-      port: 6379
-      password: insoft!23
+      connection-type: sentinel
+#      host: 172.30.10.25
+#      port: 6379
+#      password: insoft!23
+      sentinel:
+        nodes:
+          - 127.0.0.1:26379
+          - 127.0.0.1:26380
+          - 127.0.0.1:26381
+        master: master-name
+        password: password
+#      cluster:
+#        nodes:
+#          - 127.0.0.1:6001
+#          - 127.0.0.1:6002
+#          - 127.0.0.1:6003
